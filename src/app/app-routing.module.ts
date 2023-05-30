@@ -21,6 +21,14 @@ const routes: Routes = [
         './appointments/appointment-details/appointment-details.module'
       ).then((m) => m.AppointmentDetailsPageModule),
   },
+  {
+    path: 'users',
+    loadChildren: () => import('./users/users/users.module').then( m => m.UsersPageModule)
+  },
+  {
+    path: 'user-details',
+    loadChildren: () => import('./users/user-details/user-details.module').then( m => m.UserDetailsPageModule)
+  },
 ];
 
 @NgModule({
