@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create New appointment</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #addAppointmentForm="ngForm" (ngSubmit)="onAddAppointment()">
+    <ion-grid>
+      <ion-row size="6" offset="3">
+        <ion-col>
+          <ion-card class="ion-padding">
+            <ion-card-content>
+              <ion-label position="floating">Date</ion-label>
+              <ion-item>
+                <ion-datetime
+                  min="{{ currentDate }}"
+                  displayFormat="dd.MM.yyyy. HH:mm"
+                  hour-cycle="h23"
+                  ngModel
+                  name="datum"
+                  required
+                ></ion-datetime>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row size="6" offset="3">
+        <ion-col size-sm="6">
+          <ion-button
+            type="submit"
+            color="primary"
+            shape="round"
+            expand="block"
+            [disabled]="addAppointmentForm.invalid"
+          >
+            Add</ion-button
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

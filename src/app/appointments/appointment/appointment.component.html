@@ -1,0 +1,9 @@
+<ion-item [routerLink]="appointment.id">
+  <ion-label color="success" *ngIf="!appointment.free">{{
+    appointment.date | date : "dd.MM.yyyy. HH:mm"
+  }}</ion-label>
+  <ion-label color="danger" *ngIf="appointment.free">{{
+    appointment.date | date : "dd.MM.yyyy. HH:mm"
+  }}</ion-label>
+  <ion-icon name="trash-outline" slot="end"></ion-icon>
+</ion-item>
