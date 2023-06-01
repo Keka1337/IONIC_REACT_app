@@ -23,11 +23,20 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    loadChildren: () => import('./users/users/users.module').then( m => m.UsersPageModule)
+    loadChildren: () =>
+      import('./users/users/users.module').then((m) => m.UsersPageModule),
   },
   {
     path: 'user-details',
-    loadChildren: () => import('./users/user-details/user-details.module').then( m => m.UserDetailsPageModule)
+    loadChildren: () =>
+      import('./users/user-details/user-details.module').then(
+        (m) => m.UserDetailsPageModule
+      ),
+  },
+  {
+    path: 'about-us',
+    loadChildren: () =>
+      import('./about-us/about-us.module').then((m) => m.AboutUsPageModule),
   },
 ];
 
