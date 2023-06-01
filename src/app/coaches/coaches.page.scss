@@ -3,24 +3,12 @@ h1 {
   text-align: center;
   font-size: 3rem;
 }
-
-h2 {
-  text-align: center;
-  font-size: 2rem;
-}
-
 p {
   padding: 1vw;
   padding-top: 0vw;
   font-size: 1.1rem;
   text-align: justify;
 }
-
-ion-row {
-  font-size: 1.1rem;
-  padding-top: 0.5 vw;
-}
-
-.contact {
-  background-color: #ffd79e;
+ion-card-title {
+  color: #ff9500;
 }
