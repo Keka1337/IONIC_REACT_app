@@ -16,6 +16,7 @@ export class AppointmentDetailsPage implements OnInit {
 
   ngOnInit() {
     this.appointment = { id: '1', date: new Date(5000), free: true };
+    this.currentDate = new Date().toISOString();
   }
 
   onEditAppointment() {

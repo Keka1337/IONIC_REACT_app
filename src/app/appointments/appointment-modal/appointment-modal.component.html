@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Create New appointment</ion-title>
+    <ion-title>Make New Appointment</ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="onCancel()">
         <ion-icon name="close"></ion-icon>
@@ -12,21 +12,20 @@
 <ion-content>
   <form #addAppointmentForm="ngForm" (ngSubmit)="onAddAppointment()">
     <ion-grid>
-      <ion-row size="6" offset="3">
+      <ion-row size="6">
         <ion-col>
           <ion-card class="ion-padding">
             <ion-card-content>
               <ion-label position="floating">Date</ion-label>
-              <ion-item>
-                <ion-datetime
-                  min="{{ currentDate }}"
-                  displayFormat="dd.MM.yyyy. HH:mm"
-                  hour-cycle="h23"
-                  ngModel
-                  name="datum"
-                  required
-                ></ion-datetime>
-              </ion-item>
+              <ion-datetime
+                color="calendar"
+                min="{{ currentDate }}"
+                displayFormat="dd.MM.yyyy. HH:mm"
+                hour-cycle="h23"
+                ngModel
+                name="datum"
+                required
+              ></ion-datetime>
             </ion-card-content>
           </ion-card>
         </ion-col>
