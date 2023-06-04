@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/korisnici"></ion-back-button>
     </ion-buttons>
@@ -8,14 +8,15 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="ion-no-margin">
+  <ion-card>
     <ion-card-content>
       <ion-grid no-padding>
         <ion-row>
-          <ion-col no-padding size-sm="6" offset-sm="3">
+          <ion-col class="ion-text-center" size-sm="6" offset-sm="3">
             <img
               alt="Silhouette of a person's head"
               src="https://ionicframework.com/docs/img/demos/avatar.svg"
+              width="60%"
             />
           </ion-col>
         </ion-row>
@@ -43,3 +44,8 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title>La Salsa Ritmos</ion-title>
+  </ion-toolbar>
+</ion-footer>

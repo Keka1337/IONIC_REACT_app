@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-about-us',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about-us.page.scss'],
 })
 export class AboutUsPage implements OnInit {
+  @ViewChild('pageTop') pageTop!: IonContent;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  public pageScroller() {
+    this.pageTop.scrollToTop();
   }
-
 }

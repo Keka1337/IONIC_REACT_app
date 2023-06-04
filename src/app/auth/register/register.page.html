@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)">
+    <div class="main-content">
+      <ion-item>
+        <ion-input
+          placeholder="Name"
+          type="text"
+          required
+          ngModel
+          name="name"
+          #name="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item class="items" lines="none" *ngIf="name.invalid && name.touched"
+        >Name is required</ion-item
+      >
+
+      <ion-item>
+        <ion-input
+          placeholder="Lastname"
+          type="text"
+          required
+          ngModel
+          name="lastname"
+          #lastname="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item
+        class="items"
+        lines="none"
+        *ngIf="lastname.invalid && lastname.touched"
+        >Lastname is required</ion-item
+      >
+
+      <ion-item>
+        <ion-input
+          placeholder="Email"
+          type="email"
+          required
+          ngModel
+          name="email"
+          #email="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item
+        class="items"
+        lines="none"
+        *ngIf="email.invalid && email.touched"
+        >Email must have valid format</ion-item
+      >
+
+      <ion-item>
+        <ion-input
+          placeholder="Password"
+          type="password"
+          required
+          ngModel
+          name="password"
+          #password="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item
+        class="items"
+        lines="none"
+        *ngIf="password.invalid && password.touched"
+        >Password must have 6 or more characters</ion-item
+      >
+
+      <ion-button
+        type="submit"
+        color="primary"
+        shape="round"
+        expand="block"
+        [disabled]="registerForm.invalid"
+        >Register</ion-button
+      >
+    </div>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title>La Salsa Ritmos</ion-title>
+  </ion-toolbar>
+</ion-footer>

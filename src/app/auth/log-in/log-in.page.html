@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Welcome</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #logInForm="ngForm" (ngSubmit)="onLogIn(logInForm)">
+    <div>
+      <ion-grid class="main-content">
+        <ion-item lines="none">
+          <ion-input
+            placeholder="Email"
+            type="email"
+            ngModel
+            name="email"
+            required
+            email
+            #email="ngModel"
+          ></ion-input>
+        </ion-item>
+        <ion-item
+          lines="none"
+          class="items"
+          lines="none"
+          *ngIf="email.invalid && email.touched"
+          >Email does not have valid format!</ion-item
+        >
+        <ion-item lines="none">
+          <ion-input
+            placeholder="Password"
+            type="password"
+            ngModel
+            name="password"
+            required
+            minlength="6"
+            #password="ngModel"
+          ></ion-input>
+        </ion-item>
+        <ion-item
+          class="items"
+          lines="none"
+          *ngIf="password.invalid && password.touched"
+          >Password must have 6 or more characters!</ion-item
+        >
+        <div class="ion-text-center">
+          <ion-spinner
+            name="bubbles"
+            color="primary"
+            *ngIf="isLoading"
+          ></ion-spinner>
+        </div>
+        <ion-button
+          type="submit"
+          color="primary"
+          shape="round"
+          expand="block"
+          [disabled]="logInForm.invalid"
+          *ngIf="!isLoading"
+          >Log In</ion-button
+        >
+      </ion-grid>
+    </div>
+  </form>
+  <div class="register">
+    <ion-text>Not registered yet?</ion-text>
+    <ion-button
+      routerLink="/register"
+      color="secondary"
+      shape="round"
+      expand="block"
+      >Register</ion-button
+    >
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title>La Salsa Ritmos</ion-title>
+  </ion-toolbar>
+</ion-footer>
