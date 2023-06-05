@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { AppointmentModalComponent } from '../appointment-modal/appointment-modal.component';
 import { Appointment } from '../appointments.model';
 import { AppointmentsService } from '../appointments.service';
@@ -9,20 +10,26 @@ import { AppointmentsService } from '../appointments.service';
   templateUrl: './appointments.page.html',
   styleUrls: ['./appointments.page.scss'],
 })
-export class AppointmentsPage implements OnInit {
+export class AppointmentsPage implements OnInit, OnDestroy {
   appointments!: Appointment[];
+  private appointmentsSub: Subscription;
 
   constructor(
     private modalCtrl: ModalController,
     private appointmentsService: AppointmentsService
   ) {}
 
-  ngOnInit() {}
-
-  ionViewWillEnter() {
+  ngOnInit() {
     this.appointmentsService.getAppointments().subscribe((appointments) => {
       console.log(appointments);
       this.appointments = appointments;
+    });
+  }
+
+  ionViewWillEnter() {
+    this.appointmentsService.appointments().subscribe((appointments) => {
+      console.log(appointments);
+      // this.appointments = appointments;
     });
   }
 
@@ -45,9 +52,15 @@ export class AppointmentsPage implements OnInit {
               resultData.data.appointmentData.free
             )
             .subscribe((appointments) => {
-              this.appointments = appointments;
+              // this.appointments = appointments;
             });
         }
       });
+  }
+
+  ngOnDestroy() {
+    if (this.appointmentsSub) {
+      this.appointmentsSub.unsubscribe();
+    }
   }
 }
