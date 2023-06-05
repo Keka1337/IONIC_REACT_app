@@ -19,5 +19,45 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {}
 
-  onRegister(form: NgForm) {}
+  onRegister(form: NgForm) {
+    this.loadingCrtl
+      .create({ message: 'Registration in progress...' })
+      .then((loadingEl) => {
+        loadingEl.present();
+        this.authService.register(form.value).subscribe(
+          (resData) => {
+            console.log('Successfully registered!');
+            console.log(resData);
+            this.authService.addNewUser(form.value);
+            loadingEl.dismiss();
+            if (this.authService.currentUser?.email === 'admin@admin.com') {
+              this.router.navigateByUrl('/appointments');
+            } else {
+              this.router.navigateByUrl('/appointments');
+            }
+          },
+          (errRes) => {
+            console.log(errRes);
+            loadingEl.dismiss();
+            let message = 'An error has occured!';
+
+            const code = errRes.error.error.message;
+            if (code === 'EMAIL_EXISTS') {
+              message = 'User with provided email already exists!';
+            }
+
+            this.alertCtrl
+              .create({
+                header: 'Error',
+                message,
+                buttons: ['Submit'],
+              })
+              .then((alert) => {
+                alert.present();
+              });
+            form.reset();
+          }
+        );
+      });
+  }
 }

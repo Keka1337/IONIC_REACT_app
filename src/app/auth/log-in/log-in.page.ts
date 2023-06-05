@@ -23,8 +23,34 @@ export class LogInPage implements OnInit {
   onLogIn(form: NgForm) {
     this.isLoading = true;
     if (form.valid) {
-      this.authService.logIn(form.value);
-      this.isLoading = false;
+      this.authService.logIn(form.value).subscribe(
+        (resData) => {
+          console.log('Successfully logged in!');
+          console.log(resData);
+          this.isLoading = false;
+
+          if (this.authService.currentUser?.email === 'admin@admin.com') {
+            this.router.navigateByUrl('/appointments');
+          } else {
+            this.router.navigateByUrl('/appointments');
+          }
+        },
+        (errRes) => {
+          console.log(errRes);
+          this.isLoading = false;
+          let message = 'Invalid email or password!';
+          this.alertCtrl
+            .create({
+              header: 'Authentication failed',
+              message,
+              buttons: ['Confirm'],
+            })
+            .then((alert) => {
+              alert.present();
+            });
+          form.reset();
+        }
+      );
     }
   }
 }
