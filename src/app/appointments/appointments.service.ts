@@ -22,10 +22,21 @@ export class AppointmentsService {
 
   addAppointment(date: Date, free: boolean = false) {
     this.appointment = new Appointment('', date, free);
-    return this.http.post<{ name: string }>(
-      `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments.json`,
-      { date, free }
-    );
+    return this.http
+      .post<{ name: string }>(
+        `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments.json`,
+        { date, free }
+      )
+      .pipe(
+        map((resData) => {
+          this._appointments.push({
+            id: resData.name,
+            date,
+            free,
+          });
+          return this._appointments;
+        })
+      );
   }
 
   getAppointments() {
@@ -52,5 +63,9 @@ export class AppointmentsService {
       );
   }
 
-  deleteAppointment(id: string) {}
+  deleteAppointment(id: string) {
+    this.http.delete(
+      `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments/${id}`
+    );
+  }
 }

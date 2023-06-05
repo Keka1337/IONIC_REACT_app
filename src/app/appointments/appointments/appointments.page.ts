@@ -17,7 +17,9 @@ export class AppointmentsPage implements OnInit {
     private appointmentsService: AppointmentsService
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter() {
     this.appointmentsService.getAppointments().subscribe((appointments) => {
       console.log(appointments);
       this.appointments = appointments;
@@ -42,7 +44,9 @@ export class AppointmentsPage implements OnInit {
               resultData.data.appointmentData.date,
               resultData.data.appointmentData.free
             )
-            .subscribe((res) => {});
+            .subscribe((appointments) => {
+              this.appointments = appointments;
+            });
         }
       });
   }

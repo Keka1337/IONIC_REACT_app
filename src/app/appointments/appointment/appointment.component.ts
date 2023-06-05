@@ -41,7 +41,6 @@ export class AppointmentComponent implements OnInit {
               role: 'delete',
               handler: () => {
                 this.appointmentService.deleteAppointment(appointment.id);
-                this.navCtrl.navigateBack('/appoitnemnts');
               },
             },
             {

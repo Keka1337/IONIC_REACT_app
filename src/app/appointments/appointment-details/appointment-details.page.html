@@ -8,21 +8,18 @@
 </ion-header>
 
 <ion-content>
-  <div class="ion-text-center"></div>
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col no-padding size-sm="6" offset-sm="3">
         <ion-card>
           <ion-card-header>
-            <ion-card-title
+            <ion-card-title color="white"
               >{{ appointment.date | date: 'dd.MM.yyyy. HH:mm'
               }}</ion-card-title
             >
-            <ion-card-subtitle>
-              <ion-label color="success" *ngIf="appointment.free"
-                >FREE</ion-label
-              >
-              <ion-label color="danger" *ngIf="!appointment.free"
+            <ion-card-subtitle color="white">
+              <ion-label *ngIf="appointment.free">FREE</ion-label>
+              <ion-label *ngIf="!appointment.free"
                 >NOT FREE</ion-label
               ></ion-card-subtitle
             >
@@ -41,7 +38,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size-sm="6">
+      <ion-col no-padding size-sm="6" offset-sm="3">
         <ion-button
           type="submit"
           color="primary"

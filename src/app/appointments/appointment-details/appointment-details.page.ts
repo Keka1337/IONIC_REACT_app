@@ -15,7 +15,7 @@ export class AppointmentDetailsPage implements OnInit {
   constructor(private toastCtrl: ToastController) {}
 
   ngOnInit() {
-    this.appointment = { id: '1', date: new Date(5000), free: true };
+    this.appointment = { id: '1', date: new Date(), free: true };
     this.currentDate = new Date().toISOString();
   }
 
