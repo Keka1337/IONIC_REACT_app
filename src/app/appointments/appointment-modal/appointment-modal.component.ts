@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./appointment-modal.component.scss'],
 })
 export class AppointmentModalComponent implements OnInit {
-  @ViewChild('dodajTerminForma', { static: true }) form!: NgForm;
+  @ViewChild('addAppointmentForm', { static: true }) form!: NgForm;
   @Input() title!: string;
   currentDate!: string;
 
@@ -27,7 +27,7 @@ export class AppointmentModalComponent implements OnInit {
       return;
     }
     this.modalCtrl.dismiss(
-      { appointmentData: { datum: this.form.value['date'] } },
+      { appointmentData: { date: this.form.value['date'] } },
       'confirm'
     );
   }

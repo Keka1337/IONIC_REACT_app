@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface UserData {
   name?: string;
@@ -12,11 +14,12 @@ interface UserData {
   providedIn: 'root',
 })
 export class AuthService {
-  private _isUserAuthenticated = false;
+  public isUserAuthenticated = false;
 
-  constructor() {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   logIn(user: UserData) {
-    this._isUserAuthenticated = true;
+    this.isUserAuthenticated = true;
+    this.router.navigateByUrl('/appointments');
   }
 }

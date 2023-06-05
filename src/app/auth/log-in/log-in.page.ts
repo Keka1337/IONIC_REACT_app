@@ -24,6 +24,7 @@ export class LogInPage implements OnInit {
     this.isLoading = true;
     if (form.valid) {
       this.authService.logIn(form.value);
+      this.isLoading = false;
     }
   }
 }

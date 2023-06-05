@@ -40,15 +40,20 @@ const routes: Routes = [
   },
   {
     path: 'coaches',
-    loadChildren: () => import('./coaches/coaches.module').then( m => m.CoachesPageModule)
+    loadChildren: () =>
+      import('./coaches/coaches.module').then((m) => m.CoachesPageModule),
   },
   {
     path: 'log-in',
-    loadChildren: () => import('./auth/log-in/log-in.module').then( m => m.LogInPageModule)
+    loadChildren: () =>
+      import('./auth/log-in/log-in.module').then((m) => m.LogInPageModule),
   },
   {
     path: 'register',
-    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () =>
+      import('./auth/register/register.module').then(
+        (m) => m.RegisterPageModule
+      ),
   },
 ];
 

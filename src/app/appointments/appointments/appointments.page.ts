@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AppointmentModalComponent } from '../appointment-modal/appointment-modal.component';
 import { Appointment } from '../appointments.model';
+import { AppointmentsService } from '../appointments.service';
 
 @Component({
   selector: 'app-appointments',
@@ -9,17 +10,19 @@ import { Appointment } from '../appointments.model';
   styleUrls: ['./appointments.page.scss'],
 })
 export class AppointmentsPage implements OnInit {
-  appointments = [
-    { id: '1', date: new Date(500000000000), free: true },
-    { id: '2', date: new Date(500000000000), free: true },
-    { id: '3', date: new Date(500000000000), free: true },
-    { id: '4', date: new Date(500000000000), free: true },
-    { id: '5', date: new Date(500000000000), free: true },
-  ];
+  appointments!: Appointment[];
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(
+    private modalCtrl: ModalController,
+    private appointmentsService: AppointmentsService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.appointmentsService.getAppointments().subscribe((appointments) => {
+      console.log(appointments);
+      this.appointments = appointments;
+    });
+  }
 
   openModal() {
     this.modalCtrl
@@ -34,7 +37,12 @@ export class AppointmentsPage implements OnInit {
       .then((resultData) => {
         if (resultData.role === 'confirm') {
           console.log(resultData);
-          //TO DO: spoziv ka servisu da doda novi appointment
+          this.appointmentsService
+            .addAppointment(
+              resultData.data.appointmentData.date,
+              resultData.data.appointmentData.free
+            )
+            .subscribe((res) => {});
         }
       });
   }
