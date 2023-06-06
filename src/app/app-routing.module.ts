@@ -55,6 +55,13 @@ const routes: Routes = [
         (m) => m.RegisterPageModule
       ),
   },
+  {
+    path: 'user-appointments',
+    loadChildren: () =>
+      import('./user-appointments/user-appointments.module').then(
+        (m) => m.UserAppointmentsPageModule
+      ),
+  },
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, switchMap, take, tap } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { Appointment } from './appointments.model';
 
 interface AppointmentsData {
@@ -14,13 +15,13 @@ interface AppointmentsData {
 export class AppointmentsService {
   private _appointments = new BehaviorSubject<Appointment[]>([]);
   appointment!: Appointment;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   get appointments() {
     return this._appointments.asObservable;
   }
 
-  addAppointment(date: Date, free: boolean = false) {
+  addAppointment(date: Date, free: boolean = true) {
     let generatedId: string;
 
     this.appointment = new Appointment('', date, free);
@@ -83,6 +84,29 @@ export class AppointmentsService {
   deleteAppointment(id: string) {
     this.http.delete(
       `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments/${id}`
+    );
+  }
+
+  editAppointment(id: string, date: Date, free: boolean) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) =>
+        this.http.put(
+          `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments/${id}.json?auth=${token}`,
+          {
+            date,
+            free,
+          }
+        )
+      ),
+      switchMap(() => this._appointments),
+      take(1),
+      tap((appointments) => {
+        const index = appointments.findIndex((p) => p.id === id);
+        const updated = [...appointments];
+        updated[index] = new Appointment(id, date, free);
+        this._appointments.next(updated);
+      })
     );
   }
 }

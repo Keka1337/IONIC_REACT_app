@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/korisnici"></ion-back-button>
+      <ion-back-button defaultHref="/users"></ion-back-button>
     </ion-buttons>
     <ion-title>User Info</ion-title>
   </ion-toolbar>
@@ -10,7 +10,7 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <ion-grid no-padding>
+      <ion-grid no-padding *ngIf="!isLoading">
         <ion-row>
           <ion-col class="ion-text-center" size-sm="6" offset-sm="3">
             <img

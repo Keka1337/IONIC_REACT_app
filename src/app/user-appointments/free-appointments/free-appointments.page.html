@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Termini</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <app-user-appointment
+      *ngFor="let appointment of appointments"
+      [appointment]="appointment"
+    ></app-user-appointment>
+  </ion-list>
+</ion-content>

@@ -8,7 +8,7 @@ import { UserAuth } from './UserAuth';
 
 interface UserData {
   name?: string;
-  surname?: string;
+  lastname?: string;
   email: string;
   password: string;
   role: string;
@@ -46,6 +46,18 @@ export class AuthService {
           return !!user.token; //vrsimo konverziju u boolean
         } else {
           return false;
+        }
+      })
+    );
+  }
+
+  get userId() {
+    return this._user.asObservable().pipe(
+      map((user) => {
+        if (user) {
+          return user.id;
+        } else {
+          return null;
         }
       })
     );
@@ -135,14 +147,14 @@ export class AuthService {
       take(1),
       switchMap((token) => {
         admin = new User(
-          '',
+          null,
           user.name!,
-          user.surname!,
+          user.lastname!,
           user.email,
           this.adminRole
         );
         return this.http.post<{ name: string }>(
-          `https://auto-skola-app-default-rtdb.europe-west1.firebasedatabase.app/user.json?auth=${token}`,
+          `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`,
           admin
         );
       }),
@@ -167,14 +179,14 @@ export class AuthService {
       take(1),
       switchMap((token) => {
         newUser = new User(
-          '',
+          null,
           user.name!,
-          user.surname!,
+          user.lastname!,
           user.email,
           this.userRole
         );
         return this.http.post<{ name: string }>(
-          `https://auto-skola-app-default-rtdb.europe-west1.firebasedatabase.app/user.json?auth=${token}`,
+          `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`,
           newUser
         );
       }),

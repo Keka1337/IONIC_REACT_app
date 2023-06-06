@@ -4,11 +4,6 @@
       <ion-menu-button> </ion-menu-button>
     </ion-buttons>
     <ion-title>Appointments</ion-title>
-    <ion-buttons slot="end">
-      <ion-fab-button size="small" color="tertiary" (click)="openModal()">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -24,5 +19,11 @@
 <ion-footer>
   <ion-toolbar color="primary">
     <ion-title>La Salsa Ritmos</ion-title>
+    <ion-buttons slot="end">
+      Make new class appointment
+      <ion-fab-button size="small" color="secondary" (click)="openModal()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-footer>
