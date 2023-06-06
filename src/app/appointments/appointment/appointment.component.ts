@@ -26,7 +26,7 @@ export class AppointmentComponent implements OnInit {
   ngOnInit() {}
 
   onDeleteAppointment(appointment: Appointment) {
-    if (this.appointment.free === true) {
+    if (this.appointment.free === false) {
       this.toastMessage(
         `It is not possible to delete this appointment because it has been reserved`
       );
@@ -40,7 +40,11 @@ export class AppointmentComponent implements OnInit {
               text: 'Delete',
               role: 'delete',
               handler: () => {
-                this.appointmentService.deleteAppointment(appointment.id);
+                this.appointmentService
+                  .deleteAppointment(appointment.id)
+                  .subscribe(() => {
+                    this.toastMessage(`Appointment is succesfully removed!`);
+                  });
               },
             },
             {

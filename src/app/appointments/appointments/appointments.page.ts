@@ -20,14 +20,14 @@ export class AppointmentsPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.appointmentsService.getAppointments().subscribe((appointments) => {
+    this.appointmentsService.appointments.subscribe((appointments) => {
       console.log(appointments);
       this.appointments = appointments;
     });
   }
 
   ionViewWillEnter() {
-    this.appointmentsService.appointments().subscribe((appointments) => {
+    this.appointmentsService.getAppointments().subscribe((appointments) => {
       console.log(appointments);
       // this.appointments = appointments;
     });

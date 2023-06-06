@@ -18,72 +18,133 @@ export class AppointmentsService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   get appointments() {
-    return this._appointments.asObservable;
+    return this._appointments.asObservable();
   }
 
   addAppointment(date: Date, free: boolean = true) {
     let generatedId: string;
-
     this.appointment = new Appointment('', date, free);
-    return this.http
-      .post<{ name: string }>(
-        `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments.json`,
-        { date, free }
-      )
-      .pipe(
-        //presrecemo odgovor
-        switchMap((resData) => {
-          //switchMap vraca Observable
-          generatedId = resData.name;
-          return this._appointments;
-        }),
-        take(1), //uzimamo poslednji emit appointments-a
-        tap((appointments) => {
-          //pristupamo vrednosti tog poslednjeg emita/objekta
-          this._appointments.next(
-            appointments.concat(
-              //pozivamo next metodu kako bi se okinule promene u ngOnInit
-              {
-                id: generatedId,
-                date,
-                free,
-              }
-            )
-          );
-          return this._appointments;
-        })
-      );
+    // return this.http
+    //   .post<{ name: string }>(
+    //     `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments.json`,
+    //     { date, free }
+    //   )
+    //   .pipe(
+    //     //presrecemo odgovor
+    //     switchMap((resData) => {
+    //       //switchMap vraca Observable
+    //       generatedId = resData.name;
+    //       return this._appointments;
+    //     }),
+    //     take(1), //uzimamo poslednji emit appointments-a
+    //     tap((appointments) => {
+    //       //pristupamo vrednosti tog poslednjeg emita/objekta
+    //       this._appointments.next(
+    //         appointments.concat(
+    //           //pozivamo next metodu kako bi se okinule promene u ngOnInit
+    //           {
+    //             id: generatedId,
+    //             date,
+    //             free,
+    //           }
+    //         )
+    //       );
+    //       return this._appointments;
+    //     })
+    //   );
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.post<{ name: string }>(
+          `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments.json?auth=${token}`,
+          { date, free }
+        );
+      }),
+      take(1),
+      switchMap((resData) => {
+        generatedId = resData.name;
+        return this._appointments;
+      }),
+      take(1),
+      tap((appointments) => {
+        this._appointments.next(
+          appointments.concat({
+            id: generatedId,
+            date,
+            free,
+          })
+        );
+      })
+    );
   }
 
   getAppointments() {
-    return this.http
-      .get<{ [key: string]: AppointmentsData }>(
-        `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments.json`
-      )
-      .pipe(
-        map((appointmentsData) => {
-          const appointments: Appointment[] = [];
+    // return this.http
+    //   .get<{ [key: string]: AppointmentsData }>(
+    //     `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments.json`
+    //   )
+    //   .pipe(
+    // map((appointmentsData) => {
+    //   const appointments: Appointment[] = [];
+    //   for (const key in appointmentsData) {
+    //     if (appointmentsData.hasOwnProperty(key)) {
+    //       appointments.push({
+    //         id: key,
+    //         date: appointmentsData[key].date,
+    //         free: appointmentsData[key].free,
+    //       });
+    //     }
+    //   }
+    //   return appointments;
+    //     }),
+    //     tap((appointments) => {
+    //       this._appointments.next(appointments);
+    //     })
+    //   );
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) =>
+        this.http.get<{ [key: string]: AppointmentsData }>(
+          `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments.json?auth=${token}`
+        )
+      ),
+      map((appointmentsData) => {
+        const appointments: Appointment[] = [];
 
-          for (const key in appointmentsData) {
-            if (appointmentsData.hasOwnProperty(key)) {
-              appointments.push({
-                id: key,
-                date: appointmentsData[key].date,
-                free: appointmentsData[key].free,
-              });
-            }
+        for (const key in appointmentsData) {
+          if (appointmentsData.hasOwnProperty(key)) {
+            appointments.push({
+              id: key,
+              date: appointmentsData[key].date,
+              free: appointmentsData[key].free,
+            });
           }
-          return appointments;
-        }),
-        tap((appointments) => {
-          this._appointments.next(appointments);
-        })
-      );
+        }
+        return appointments;
+      }),
+      tap((appointments) => {
+        this._appointments.next(appointments);
+      })
+    );
   }
 
   deleteAppointment(id: string) {
-    this.http.delete(
-      `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments/${id}`
+    // this.http.delete(
+    //   `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments/${id}`
+    // );
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) =>
+        this.http.delete(
+          `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments/${id}.json?auth=${token}`
+        )
+      ),
+      take(1),
+      switchMap(() => this._appointments),
+      take(1),
+      tap((appointments) => {
+        this._appointments.next(appointments);
+      })
     );
   }
 
@@ -107,6 +168,48 @@ export class AppointmentsService {
         updated[index] = new Appointment(id, date, free);
         this._appointments.next(updated);
       })
+    );
+  }
+
+  getAppointment(id: string) {
+    // return this.authService.token.pipe(
+    //   take(1),
+    //   switchMap((token) =>
+    //     this.http.get<{ [key: string]: AppointmentsData }>(
+    //       `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments.json?auth=${token}`
+    //     )
+    //   ),
+    //   map((appointmentData: any) => {
+    //     const appointments: Appointment[] = [];
+
+    //     for (const key in appointmentData) {
+    //       if (appointmentData.hasOwnProperty(key)) {
+    //         appointments.push(
+    //           new Appointment(
+    //             key,
+    //             appointmentData[key].date,
+    //             appointmentData[key].free
+    //           )
+    //         );
+    //       }
+    //     }
+    //     return appointments;
+    //   }),
+    //   tap((appointments) => {
+    //     this._appointments.next(appointments);
+    //   })
+    // );
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) =>
+        this.http.get<AppointmentsData>(
+          `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/appointments/${id}.json?auth=${token}`
+        )
+      ),
+      map(
+        (resData: AppointmentsData) =>
+          new Appointment(id, resData.date, resData.free)
+      )
     );
   }
 }
