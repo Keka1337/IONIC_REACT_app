@@ -14,13 +14,12 @@ import { ReservationService } from '../reservation.service';
 })
 export class MyAppointmentsPage implements OnInit, OnDestroy {
   reservations: Reservation[];
-  termin: Appointment;
+  appointment: Appointment;
   user: UserAuth;
   private sub: Subscription;
 
   constructor(
     private rezervacijeService: ReservationService,
-    private appointmentsService: AppointmentsService,
     private authService: AuthService
   ) {
     this.user = authService.currentUser;

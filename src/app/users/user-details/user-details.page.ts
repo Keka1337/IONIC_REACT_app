@@ -15,7 +15,7 @@ export class UserDetailsPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private korisniciService: UsersService,
+    private usersService: UsersService,
     private navCtrl: NavController
   ) {}
 
@@ -28,12 +28,10 @@ export class UserDetailsPage implements OnInit {
 
       this.isLoading = true;
 
-      this.korisniciService
-        .getUser(paramMap.get('userId')!)
-        .subscribe((user) => {
-          this.user = user;
-          this.isLoading = false;
-        });
+      this.usersService.getUser(paramMap.get('userId')!).subscribe((user) => {
+        this.user = user;
+        this.isLoading = false;
+      });
     });
   }
 }

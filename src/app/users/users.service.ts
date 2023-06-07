@@ -30,28 +30,25 @@ export class UsersService {
           `https://la-salsa-ritmos-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${token}`
         )
       ),
-      map((korisnikData: any) => {
-        const korisnici: User[] = [];
-        for (const key in korisnikData) {
-          if (
-            korisnikData.hasOwnProperty(key) &&
-            korisnikData[key].role === 'user'
-          ) {
-            korisnici.push(
+      map((userData: any) => {
+        const users: User[] = [];
+        for (const key in userData) {
+          if (userData.hasOwnProperty(key) && userData[key].role === 'user') {
+            users.push(
               new User(
                 key,
-                korisnikData[key].name,
-                korisnikData[key].lastname,
-                korisnikData[key].email,
-                korisnikData[key].role
+                userData[key].name,
+                userData[key].lastname,
+                userData[key].email,
+                userData[key].role
               )
             );
           }
         }
-        return korisnici;
+        return users;
       }),
-      tap((korisnici) => {
-        this._users.next(korisnici);
+      tap((users) => {
+        this._users.next(users);
       })
     );
   }

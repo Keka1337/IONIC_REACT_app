@@ -32,7 +32,7 @@ export class LogInPage implements OnInit {
           if (this.authService.currentUser?.email === 'admin@admin.com') {
             this.router.navigateByUrl('/appointments');
           } else {
-            this.router.navigateByUrl('/appointments');
+            this.router.navigateByUrl('/about-us');
           }
         },
         (errRes) => {

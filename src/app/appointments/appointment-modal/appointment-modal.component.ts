@@ -9,13 +9,13 @@ import { ModalController } from '@ionic/angular';
 })
 export class AppointmentModalComponent implements OnInit {
   @ViewChild('addAppointmentForm', { static: true }) form!: NgForm;
-  @Input() title!: string;
-  currentDate!: string;
+  @Input() title: string;
+  currentDate: string;
 
   constructor(private modalCtrl: ModalController) {}
 
   ngOnInit() {
-    this.currentDate = new Date().toISOString();
+    this.currentDate = new Date(Date.now()).toISOString();
   }
 
   onCancel() {
