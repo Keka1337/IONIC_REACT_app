@@ -18,21 +18,25 @@
               }}</ion-card-title
             >
             <ion-card-subtitle color="white">
-              <ion-label *ngIf="appointment.free">FREE</ion-label>
+              <ion-label *ngIf="appointment.free">AVAILABLE</ion-label>
               <ion-label *ngIf="!appointment.free"
-                >NOT FREE</ion-label
+                >RESERVED</ion-label
               ></ion-card-subtitle
             >
           </ion-card-header>
           <ion-card-content>
-            <ion-label>Date: </ion-label>
-            <ion-datetime
-              color="calendar"
-              min="{{currentDate}}"
-              displayFormat="dd.MM.yyyy. HH:mm"
-              hour-cycle="h23"
-              [(ngModel)]="selectedDate"
-            ></ion-datetime>
+            <ion-row>
+              <ion-col no-padding size-sm="6" offset-sm="3">
+                <ion-label>Date: </ion-label>
+                <ion-datetime
+                  color="calendar"
+                  min="{{currentDate}}"
+                  displayFormat="dd.MM.yyyy. HH:mm"
+                  hour-cycle="h23"
+                  [(ngModel)]="selectedDate"
+                ></ion-datetime>
+              </ion-col>
+            </ion-row>
           </ion-card-content>
         </ion-card>
       </ion-col>

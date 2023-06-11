@@ -1,16 +1,16 @@
 <ion-item>
   <ion-label>{{ appointment.date | date : "dd.MM.yyyy. HH:mm" }}</ion-label>
-  <ion-label color="secondary" *ngIf="appointment.free"> free </ion-label>
+  <ion-label color="secondary" *ngIf="appointment.free">
+    <b>available</b>
+  </ion-label>
   <ion-label *ngIf="!appointment.free"> reserved </ion-label>
-  <ion-icon
-    name="eye-outline"
-    [routerLink]="appointment.id"
-    color="secondary"
-  ></ion-icon>
-  <ion-icon
-    name="trash-outline"
-    slot="end"
-    (click)="onDeleteAppointment(appointment)"
+  <ion-button color="secondary" [routerLink]="appointment.id" shape="round"
+    ><ion-icon name="eye" slot="icon-only" color="light"></ion-icon
+  ></ion-button>
+  <ion-button
     color="danger"
-  ></ion-icon>
+    shape="round"
+    (click)="onDeleteAppointment(appointment)"
+    ><ion-icon name="trash" slot="icon-only" color="light"></ion-icon
+  ></ion-button>
 </ion-item>

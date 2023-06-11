@@ -143,7 +143,7 @@ export class AppointmentsService {
       switchMap(() => this._appointments),
       take(1),
       tap((appointments) => {
-        this._appointments.next(appointments);
+        this._appointments.next(appointments.filter((app) => app.id != id));
       })
     );
   }
